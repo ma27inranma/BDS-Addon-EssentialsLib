@@ -9,8 +9,8 @@
     "typescript": "^5.7.3"
   },
   "scripts": {
-    "build:bash": "tsup --config tsup.config.ts && mv BP/scripts/dist/index.js BP/scripts/dist/essentialslib.js && mv BP/scripts/dist/index.d.mts BP/scripts/dist/essentialslib.d.ts && mv BP/scripts/dist/index.js.map BP/scripts/dist/essentialslib.js.map",
-    "build:powershell": "tsup --config tsup.config.ts && mv BP/scripts/dist/index.js BP/scripts/dist/essentialslib.js && mv BP/scripts/dist/index.d.mts BP/scripts/dist/essentialslib.d.ts && mv BP/scripts/dist/index.js.map BP/scripts/dist/essentialslib.js.map",
-    "build:cmd": "tsup --config tsup.config.ts && ren BP\\scripts\\dist\\index.js essentialslib.js && ren BP\\scripts\\dist\\index.d.mts essentialslib.d.ts && ren BP\\scripts\\dist\\index.js.map essentialslib.js.map"
+    "build:bash": "tsup --config tsup.config.ts && mv BP/scripts/dist/index.js BP/scripts/dist/essentialslib.js && mv BP/scripts/dist/index.d.mts BP/scripts/dist/essentialslib.d.ts && mv BP/scripts/dist/index.js.map BP/scripts/dist/essentialslib.js.map && cp license.md BP/scripts/dist/license.md",
+    "build:powershell": "tsup --config tsup.config.ts; mv BP/scripts/dist/index.js BP/scripts/dist/essentialslib.js; mv BP/scripts/dist/index.d.mts BP/scripts/dist/essentialslib.d.ts; mv BP/scripts/dist/index.js.map BP/scripts/dist/essentialslib.js.map; cp license.md BP/scripts/dist/license.md",
+    "build:cmd": "tsup --config tsup.config.ts && ren BP\\scripts\\dist\\index.js essentialslib.js && ren BP\\scripts\\dist\\index.d.mts essentialslib.d.ts && ren BP\\scripts\\dist\\index.js.map essentialslib.js.map && copy license.md BP\\scripts\\dist\\license.md"
   }
 }
