@@ -33,3 +33,17 @@ export function div(a: MC.Vector3, b: MC.Vector3 | number): MC.Vector3 {
 export function len(a: MC.Vector3): number {
 	return Math.sqrt(a.x * a.x + a.y * a.y + a.z * a.z);
 }
+
+export function lenSq(a: MC.Vector3): number {
+	return a.x * a.x + a.y * a.y + a.z * a.z;
+}
+
+export function dot(a: MC.Vector3, b: MC.Vector3): number {
+	return a.x * b.x + a.y * b.y + a.z * b.z;
+}
+
+export function normalize(a: MC.Vector3): MC.Vector3 {
+	const l = len(a);
+	if (l < 1e-12) return {x: 0, y: 0, z: 0};
+	return {x: a.x / l, y: a.y / l, z: a.z / l};
+}

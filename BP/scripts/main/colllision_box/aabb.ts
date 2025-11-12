@@ -1,6 +1,8 @@
 import * as MC from '@minecraft/server';
 import { CollisionVolume, intersects } from './collision_box';
 import { add, div, len, sub } from '../vec/vector3';
+import { CollisionVolumeCone } from './cone';
+import * as Debug from '@minecraft/debug-utilities';
 
 
 
@@ -8,7 +10,7 @@ export class CollisionVolumeBox implements CollisionVolume {
 	public min: MC.Vector3;
 	public max: MC.Vector3;
 
-	constructor(min: MC.Vector3, max: MC.Vector3) {
+	public constructor(min: MC.Vector3, max: MC.Vector3) {
 		const minX = Math.min(min.x, max.x);
 		const minY = Math.min(min.y, max.y);
 		const minZ = Math.min(min.z, max.z);
@@ -20,24 +22,40 @@ export class CollisionVolumeBox implements CollisionVolume {
 		this.max = {x: maxX, y: maxY, z: maxZ};
 	}
 
-	getHeristicRadius(): number {
+	public getHeristicRadius(): number {
 		return len(sub(this.max, this.min)) / 2;
 	}
 
-	getHeristicCenter(): MC.Vector3 {
+	public getHeristicCenter(): MC.Vector3 {
 		return add(this.min, div(sub(this.max, this.min), 2));
 	}
 
-	intersects(_other: CollisionVolume): boolean {
+	public intersects(_other: CollisionVolume): boolean {
 		return intersects(this, _other);
 	}
 
-	intersectsAABB(other: CollisionVolumeBox): boolean {
+	public intersectsAABB(other: CollisionVolumeBox): boolean {
 		return !(this.max.x < other.min.x || this.min.x > other.max.x || this.max.y < other.min.y || this.min.y > other.max.y || this.max.z < other.min.z || this.min.z > other.max.z);
 	}
 
-	containsPoint(point: MC.Vector3): boolean {
+	public intersectsCone(other: CollisionVolumeCone): boolean {
+		return other.intersectsAABB(this);
+	}
+
+	public containsPoint(point: MC.Vector3): boolean {
 		return point.x >= this.min.x && point.x <= this.max.x && point.y >= this.min.y && point.y <= this.max.y && point.z >= this.min.z && point.z <= this.max.z;
+	}
+
+	public visualize(color: MC.RGB, dimension?: MC.Dimension, lifetime: number = 10): this {
+		const shape = new Debug.DebugBox(this.min);
+		shape.bound = sub(this.max, this.min);
+		shape.color = color;
+		shape.scale = 1;
+		Debug.debugDrawer.addShape(shape);
+
+		MC.system.runTimeout(() => shape.remove(), lifetime); // because timeLeft works weirdly
+
+		return this;
 	}
 
 	// union(other: CollisionVolume): CollisionVolume {
