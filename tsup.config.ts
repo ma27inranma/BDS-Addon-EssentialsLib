@@ -10,6 +10,6 @@ export default defineConfig({
   outDir: 'BP/scripts/dist',
   outExtension: ({ format }) => ({
     js: '.js',
-    dts: '.d.ts'
+    dts: '.d.ts' // WY ITS NOT WORKING
   })
 })

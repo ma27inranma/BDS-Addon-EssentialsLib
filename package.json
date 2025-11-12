@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@minecraft/debug-utilities": "^1.0.0-beta.1.21.95-stable",
     "@minecraft/server": "^2.4.0-beta.1.21.120-stable",
     "@minecraft/server-ui": "^2.1.0-beta.1.21.102-stable"
   },
@@ -8,6 +9,8 @@
     "typescript": "^5.7.3"
   },
   "scripts": {
-    "build": "tsup BP/scripts/main/index.ts --format esm --dts --minify --sourcemap --out-dir BP/scripts/dist"
+    "build:bash": "tsup --config tsup.config.ts && mv BP/scripts/dist/index.js BP/scripts/dist/essentialslib.js && mv BP/scripts/dist/index.d.mts BP/scripts/dist/essentialslib.d.ts && mv BP/scripts/dist/index.js.map BP/scripts/dist/essentialslib.js.map",
+    "build:powershell": "tsup --config tsup.config.ts && mv BP/scripts/dist/index.js BP/scripts/dist/essentialslib.js && mv BP/scripts/dist/index.d.mts BP/scripts/dist/essentialslib.d.ts && mv BP/scripts/dist/index.js.map BP/scripts/dist/essentialslib.js.map",
+    "build:cmd": "tsup --config tsup.config.ts && ren BP\\scripts\\dist\\index.js essentialslib.js && ren BP\\scripts\\dist\\index.d.mts essentialslib.d.ts && ren BP\\scripts\\dist\\index.js.map essentialslib.js.map"
   }
 }
