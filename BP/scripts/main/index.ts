@@ -8,3 +8,4 @@ export * from './vec/vector3';
 export * from './storage/storage_provider';
 export * from './storage/cached_storage';
 export * as item from './item/item';
+export * as math from './math/noise_3d';
