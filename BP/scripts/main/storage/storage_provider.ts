@@ -32,6 +32,18 @@ export abstract class AbstractStorageProvider<StorageRepresentation> {
 	public abstract keys(): string[];
 }
 
+export abstract class AbstractAsyncStorageProvider<StorageRepresentation> {
+	public abstract getRaw(key: string): StorageRepresentation | undefined;
+	/**
+	 * @param returnUndefined Suppress error and return undefined instead?
+	 */
+	public abstract getObject(key: string, returnUndefined?: boolean): Promise<any | void>;
+	public abstract setRaw(key: string, value: StorageRepresentation | undefined): Promise<boolean>;
+	public abstract setObject(key: string, value: any | undefined): Promise<void>;
+	public abstract keysInternal(): Promise<string[]>;
+	public abstract keys(): Promise<string[]>;
+}
+
 export class DynamicPropertyStorageProvider extends AbstractStorageProvider<string> {
 	private dynamicPropertyProvider: DynamicPropertyProvider;
 
