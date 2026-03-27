@@ -23,3 +23,19 @@ export function tryShrinkHeldItem(entity: MC.Entity, amount: number = 1) {
 
 	equippable?.setEquipment(MC.EquipmentSlot.Mainhand, Item.shrinkGet(heldItem, amount));
 }
+
+export function giveItemOrDrop(entity: MC.Entity, item: MC.ItemStack): void {
+	if (!entity.hasComponent('inventory') || entity.hasComponent('equippable')) throw new Error(`entity ${entity.typeId} does not have an Inventory or Equippable component, Which is required to give items.`);
+
+	const inv = entity.getComponent('inventory')!.container;
+	if (!inv) {
+		const equippable = entity.getComponent('equippable');
+
+		const oldItem = equippable?.getEquipment(MC.EquipmentSlot.Mainhand);
+		if (oldItem) return void entity.dimension.spawnItem(item, entity.location);
+
+		equippable?.setEquipment(MC.EquipmentSlot.Mainhand, item);
+	}
+
+	if (inv.addItem(item)) return void entity.dimension.spawnItem(item, entity.location);
+}
