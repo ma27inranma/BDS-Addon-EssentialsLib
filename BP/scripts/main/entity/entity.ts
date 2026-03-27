@@ -25,7 +25,7 @@ export function tryShrinkHeldItem(entity: MC.Entity, amount: number = 1) {
 }
 
 export function giveItemOrDrop(entity: MC.Entity, item: MC.ItemStack): void {
-	if (!entity.hasComponent('inventory') || entity.hasComponent('equippable')) throw new Error(`entity ${entity.typeId} does not have an Inventory or Equippable component, Which is required to give items.`);
+	if (!entity.hasComponent('inventory') && !entity.hasComponent('equippable')) throw new Error(`entity ${entity.typeId} does not have an Inventory or Equippable component, Which is required to give items.`);
 
 	const inv = entity.getComponent('inventory')!.container;
 	if (!inv) {
