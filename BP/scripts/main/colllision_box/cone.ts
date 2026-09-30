@@ -1,5 +1,5 @@
 import * as MC from '@minecraft/server';
-import * as Debug from '@minecraft/debug-utilities';
+import { DebugUtilities as Debug } from '../mc_modules';
 import { CollisionVolume, intersects } from './collision_box';
 import { CollisionVolumeBox } from './aabb';
 import { add, sub, len, mul, dot, lenSq } from '../vec/vector3';
@@ -100,6 +100,8 @@ export class CollisionVolumeCone implements CollisionVolume {
 	}
 
 	public visualize(color: MC.RGB, dimension?: MC.Dimension, lifetime?: number): this {
+		if (!Debug) throw new Error("Couldn't load @minecraft/debug-utilities, Please add it to the manifest.json");
+
 		const removeAfter = lifetime ?? 10;
 
 		const { axisUnit, height } = this.getAxis();

@@ -2,7 +2,7 @@ import * as MC from '@minecraft/server';
 import { CollisionVolume, intersects } from './collision_box';
 import { add, div, len, sub } from '../vec/vector3';
 import { CollisionVolumeCone } from './cone';
-import * as Debug from '@minecraft/debug-utilities';
+import { DebugUtilities as Debug } from '../mc_modules';
 
 
 
@@ -47,6 +47,8 @@ export class CollisionVolumeBox implements CollisionVolume {
 	}
 
 	public visualize(color: MC.RGB, dimension?: MC.Dimension, lifetime: number = 10): this {
+		if (!Debug) throw new Error("Couldn't load @minecraft/debug-utilities, Please add it to the manifest.json");
+
 		const shape = new Debug.DebugBox(this.min);
 		shape.bound = sub(this.max, this.min);
 		shape.color = color;
